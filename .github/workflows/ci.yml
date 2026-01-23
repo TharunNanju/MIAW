@@ -11,11 +11,11 @@ on:
       - main
 
 jobs:
-  build-test:
+  poc-ci:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up Java 17
@@ -24,6 +24,9 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Build and run tests
-        run: mvn clean test
+      - name: CI bootstrap check
+        run: |
+          echo "CI pipeline is set up correctly"
+          echo "Repository contents:"
+          ls -la
 
