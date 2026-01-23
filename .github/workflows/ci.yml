@@ -24,9 +24,7 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: CI bootstrap check
-        run: |
-          echo "CI pipeline is set up correctly"
-          echo "Repository contents:"
-          ls -la
+      - name: Build and run backend tests
+        run: mvn clean test
+        working-directory: backend
 
