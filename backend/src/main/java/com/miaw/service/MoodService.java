@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -18,6 +19,7 @@ public class MoodService {
         this.moodEntryRepository = moodEntryRepository;
     }
 
+    @Transactional
     public MoodEntry upsertEntry(User user, MoodEntryRequest request) {
         LocalDate entryDate = request.getEntryDate() != null ? request.getEntryDate() : LocalDate.now();
         MoodEntry entry = moodEntryRepository.findByUserAndEntryDate(user, entryDate)
@@ -33,6 +35,7 @@ public class MoodService {
         return moodEntryRepository.save(entry);
     }
 
+    @Transactional
     public MoodEntry updateEntry(User user, Long entryId, MoodEntryRequest request) {
         MoodEntry entry = moodEntryRepository.findById(entryId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mood entry not found"));
@@ -53,6 +56,7 @@ public class MoodService {
         return moodEntryRepository.findAllByUserAndEntryDateBetween(user, start, end);
     }
 
+    @Transactional
     public void deleteEntry(User user, Long entryId) {
         MoodEntry entry = moodEntryRepository.findById(entryId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mood entry not found"));

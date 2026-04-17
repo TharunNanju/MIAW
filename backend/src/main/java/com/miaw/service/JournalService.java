@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -18,6 +19,7 @@ public class JournalService {
         this.journalEntryRepository = journalEntryRepository;
     }
 
+    @Transactional
     public JournalEntry createEntry(User user, JournalEntryRequest request) {
         JournalEntry entry = new JournalEntry();
         entry.setUser(user);
@@ -31,6 +33,7 @@ public class JournalService {
         return journalEntryRepository.findAllByUserOrderByEntryDateDesc(user);
     }
 
+    @Transactional
     public JournalEntry updateEntry(User user, Long entryId, JournalEntryRequest request) {
         JournalEntry entry = journalEntryRepository.findById(entryId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Journal entry not found"));
@@ -45,6 +48,7 @@ public class JournalService {
         return journalEntryRepository.save(entry);
     }
 
+    @Transactional
     public void deleteEntry(User user, Long entryId) {
         JournalEntry entry = journalEntryRepository.findById(entryId)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Journal entry not found"));

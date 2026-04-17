@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MindTrack – Mental Wellness Journey Tracker</title>
+  <meta name="description"
+    content="Track your mental wellness journey with mood logging, journaling, habit tracking, and wellness assessments." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+
+<body>
+  <!-- Auth Screen -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-container">
+      <div class="auth-brand">
+        <div class="auth-logo">🍃</div>
+        <h1>MindTrack</h1>
+        <p class="auth-tagline">Your mental wellness journey starts here</p>
+      </div>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" id="tab-login">Sign In</button>
+        <button class="auth-tab" data-tab="register" id="tab-register">Create Account</button>
+      </div>
+      <form id="login-form" class="auth-form">
+        <div class="form-group">
+          <label for="login-email">Email</label>
+          <input type="email" id="login-email" placeholder="you@example.com" required aria-label="Email address" />
+        </div>
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" placeholder="••••••••" required aria-label="Password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="btn-login">Log In</button>
+      </form>
+      <form id="register-form" class="auth-form hidden">
+        <div class="form-group">
+          <label for="register-name">Full Name</label>
+          <input type="text" id="register-name" placeholder="Jane Doe" required aria-label="Full name" />
+        </div>
+        <div class="form-group">
+          <label for="register-email">Email</label>
+          <input type="email" id="register-email" placeholder="you@example.com" required aria-label="Email address" />
+        </div>
+        <div class="form-group">
+          <label for="register-password">Password</label>
+          <input type="password" id="register-password" placeholder="Min 8 characters" required minlength="8"
+            aria-label="Password" />
+        </div>
+        <div class="form-group">
+          <label for="register-confirm-password">Confirm Password</label>
+          <input type="password" id="register-confirm-password" placeholder="Re-enter password" required minlength="8"
+            aria-label="Confirm password" />
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="btn-register">Create Account</button>
+      </form>
+      <div id="auth-error" class="auth-error hidden"></div>
+      <div id="auth-link" class="auth-link"
+        style="text-align:center;margin-top:1rem;font-size:0.85rem;color:var(--text-secondary)">
+        <span id="auth-link-text">Don't have an account?</span>
+        <a href="#" id="auth-link-action"
+          style="color:var(--primary);font-weight:600;text-decoration:none;margin-left:0.25rem">Register</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Shell -->
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-brand">
+        <span class="sidebar-logo">🍃</span>
+        <span class="sidebar-title">MindTrack</span>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav">
+        <a href="#/dashboard" class="nav-link active" data-page="dashboard" aria-label="Dashboard">
+          <span class="nav-icon">🏠</span><span class="nav-label">Dashboard</span>
+        </a>
+        <a href="#/moods" class="nav-link" data-page="moods" aria-label="Mood">
+          <span class="nav-icon">😊</span><span class="nav-label">Mood</span>
+        </a>
+        <a href="#/journals" class="nav-link" data-page="journals" aria-label="Journal">
+          <span class="nav-icon">📓</span><span class="nav-label">Journal</span>
+        </a>
+        <a href="#/habits" class="nav-link" data-page="habits" aria-label="Habits">
+          <span class="nav-icon">✅</span><span class="nav-label">Habits</span>
+        </a>
+        <a href="#/reports" class="nav-link" data-page="reports" aria-label="Reports">
+          <span class="nav-icon">📊</span><span class="nav-label">Reports</span>
+        </a>
+        <a href="#/assessments" class="nav-link" data-page="assessments" aria-label="Assessment">
+          <span class="nav-icon">🧘</span><span class="nav-label">Assessment</span>
+        </a>
+        <a href="#/settings" class="nav-link" data-page="settings" aria-label="Settings">
+          <span class="nav-icon">⚙️</span><span class="nav-label">Settings</span>
+        </a>
+        <a href="#/admin" class="nav-link nav-admin hidden" data-page="admin" id="nav-admin" aria-label="Admin">
+          <span class="nav-icon">🛡️</span><span class="nav-label">Admin</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info" id="user-info">
+          <div class="user-avatar" id="user-avatar">?</div>
+          <div class="user-details">
+            <span class="user-name" id="user-name">User</span>
+            <span class="user-email" id="user-email">user@example.com</span>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm" id="btn-logout" title="Sign Out" aria-label="Logout">🚪 Logout</button>
+      </div>
+    </aside>
+
+    <main class="main-content" id="main-content">
+      <header class="top-bar">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">☰</button>
+        <h2 class="page-title" id="page-title">Dashboard</h2>
+        <div class="top-bar-actions" id="top-bar-actions">
+          <button class="notification-bell" id="notification-bell" aria-label="Notifications">
+            🔔
+          </button>
+        </div>
+      </header>
+      <div class="page-content" id="page-content">
+        <!-- Dynamic page content rendered here -->
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title">Modal</h3>
+        <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/router.js"></script>
+  <script src="/js/pages/dashboard.js"></script>
+  <script src="/js/pages/moods.js"></script>
+  <script src="/js/pages/journals.js"></script>
+  <script src="/js/pages/habits.js"></script>
+  <script src="/js/pages/assessments.js"></script>
+  <script src="/js/pages/reports.js"></script>
+  <script src="/js/pages/settings.js"></script>
+  <script src="/js/pages/admin.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+
+</html>

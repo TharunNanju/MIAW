@@ -5,6 +5,7 @@ import com.miaw.model.NotificationSettings;
 import com.miaw.model.User;
 import com.miaw.repository.NotificationSettingsRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class NotificationService {
@@ -23,6 +24,7 @@ public class NotificationService {
             });
     }
 
+    @Transactional
     public NotificationSettings updateSettings(User user, NotificationSettingsRequest request) {
         NotificationSettings settings = getSettings(user);
         settings.setMoodReminderEnabled(request.isMoodReminderEnabled());
@@ -30,5 +32,10 @@ public class NotificationService {
         settings.setMoodReminderTime(request.getMoodReminderTime());
         settings.setHabitReminderTime(request.getHabitReminderTime());
         return notificationSettingsRepository.save(settings);
+    }
+
+    public void sendMoodReminder(User user) {
+        // Stub: integrate with email/SMS/push notification system.
+        System.out.println("Reminder sent to user: " + user.getEmail());
     }
 }

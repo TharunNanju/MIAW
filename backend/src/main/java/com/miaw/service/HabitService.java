@@ -13,6 +13,7 @@ import java.util.Comparator;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
@@ -25,6 +26,7 @@ public class HabitService {
         this.habitLogRepository = habitLogRepository;
     }
 
+    @Transactional
     public Habit createHabit(User user, HabitRequest request) {
         Habit habit = new Habit();
         habit.setUser(user);
@@ -33,6 +35,7 @@ public class HabitService {
         return habitRepository.save(habit);
     }
 
+    @Transactional
     public Habit updateHabit(User user, Long habitId, HabitRequest request) {
         Habit habit = getHabitForUser(user, habitId);
         habit.setName(request.getName());
@@ -44,6 +47,7 @@ public class HabitService {
         return habitRepository.findAllByUser(user);
     }
 
+    @Transactional
     public HabitLog logHabit(User user, Long habitId, HabitLogRequest request) {
         Habit habit = getHabitForUser(user, habitId);
         LocalDate logDate = request.getLogDate() != null ? request.getLogDate() : LocalDate.now();

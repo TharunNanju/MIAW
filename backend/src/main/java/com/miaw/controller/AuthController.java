@@ -1,7 +1,10 @@
 package com.miaw.controller;
 
+import com.miaw.dto.LoginRequest;
 import com.miaw.dto.LoginResponse;
+import com.miaw.dto.RefreshRequest;
 import com.miaw.dto.RegisterRequest;
+import com.miaw.dto.TokenResponse;
 import com.miaw.model.User;
 import com.miaw.service.AuthService;
 import jakarta.validation.Valid;
@@ -24,15 +27,25 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
-    public LoginResponse register(@Valid @RequestBody RegisterRequest request) {
-        User user = authService.register(request);
-        return new LoginResponse(user.getId(), user.getName(), user.getEmail(), user.getRole());
+    public TokenResponse register(@Valid @RequestBody RegisterRequest request) {
+        return authService.registerAndIssueTokens(request);
     }
 
-    @GetMapping("/login")
-    public LoginResponse login() {
+    @PostMapping("/login")
+    public TokenResponse login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request);
+    }
+
+    @PostMapping("/refresh")
+    public TokenResponse refresh(@Valid @RequestBody RefreshRequest request) {
+        return authService.refresh(request);
+    }
+
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void logout() {
         User user = authService.getCurrentUser();
-        return new LoginResponse(user.getId(), user.getName(), user.getEmail(), user.getRole());
+        authService.logout(user);
     }
 
     @GetMapping("/me")
