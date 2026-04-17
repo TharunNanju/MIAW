@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mental Wellness Tracker</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 980px; margin: 2rem auto; padding: 0 1rem; }
+    h1 { margin-bottom: 0.25rem; }
+    .grid { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; }
+    label { display: block; margin-top: 0.5rem; font-weight: 600; }
+    input, select, textarea { width: 100%; padding: 0.5rem; margin-top: 0.25rem; }
+    button { margin-top: 0.75rem; padding: 0.5rem 1rem; cursor: pointer; }
+    pre { background: #f6f8fa; padding: 0.75rem; border-radius: 6px; overflow-x: auto; }
+    .muted { color: #666; }
+  </style>
+</head>
+<body>
+  <h1>Mental Wellness Journey Tracker</h1>
+  <p class="muted">Simple frontend that talks to the Spring Boot API using JWT access + refresh tokens.</p>
+
+  <div class="grid">
+    <div class="card">
+      <h2>Register</h2>
+      <label>Name</label>
+      <input id="registerName" placeholder="Jane Doe" />
+      <label>Email</label>
+      <input id="registerEmail" type="email" placeholder="jane@example.com" />
+      <label>Password</label>
+      <input id="registerPassword" type="password" placeholder="********" />
+      <button onclick="registerUser()">Register</button>
+    </div>
+
+    <div class="card">
+      <h2>Login</h2>
+      <label>Email</label>
+      <input id="loginEmail" type="email" placeholder="jane@example.com" />
+      <label>Password</label>
+      <input id="loginPassword" type="password" placeholder="********" />
+      <button onclick="loginUser()">Login</button>
+      <button onclick="refreshToken()">Refresh Token</button>
+      <button onclick="logoutUser()">Logout</button>
+    </div>
+
+    <div class="card">
+      <h2>Profile</h2>
+      <button onclick="loadMe()">Load /me</button>
+      <pre id="meOutput">Not loaded</pre>
+    </div>
+
+    <div class="card">
+      <h2>Log Mood</h2>
+      <label>Mood Level</label>
+      <select id="moodLevel">
+        <option value="HAPPY">Happy</option>
+        <option value="CALM">Calm</option>
+        <option value="STRESSED">Stressed</option>
+        <option value="SAD">Sad</option>
+        <option value="ANXIOUS">Anxious</option>
+        <option value="TIRED">Tired</option>
+      </select>
+      <label>Note</label>
+      <textarea id="moodNote" rows="3"></textarea>
+      <label>Date (optional)</label>
+      <input id="moodDate" type="date" />
+      <button onclick="logMood()">Save Mood</button>
+      <button onclick="listMoods()">List Recent</button>
+      <pre id="moodOutput">No mood data yet</pre>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top: 1rem;">
+    <h2>Tokens</h2>
+    <pre id="tokenOutput">Not set</pre>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
